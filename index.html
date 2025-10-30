@@ -5,173 +5,691 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Travel Itinerary</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom, #f8fbff, #e7f1fa);
+    * {
       margin: 0;
-      padding: 20px;
-      color: #222;
+      padding: 0;
+      box-sizing: border-box;
     }
-    h1 {
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #2d3748;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    header {
       text-align: center;
-      background: linear-gradient(90deg, #004c91, #00aaff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      color: white;
     }
-    details {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      padding: 20px;
-      margin-bottom: 20px;
+    
+    h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     }
-    summary {
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #0066b2;
-      cursor: pointer;
-      outline: none;
-      list-style: none;
+    
+    .trip-summary {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
     }
-    summary::-webkit-details-marker { display:none; }
-    .time {
-      color: #0066b2;
-      font-weight: 600;
-      width: 90px;
-      display: inline-block;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background-color: rgba(0, 76, 145, 0.1);
-    }
-    .activity {
-      margin-bottom: 12px;
-      transition: 0.3s;
-      padding-left: 2px;
+    
+    .summary-item {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      padding: 15px 25px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 10px;
+      font-size: 0.95em;
     }
+    
+    .summary-item span {
+      font-weight: 600;
+    }
+    
+    .day-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+    
+    .day-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+    
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    .day-number {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2em;
+      flex-shrink: 0;
+    }
+    
+    .day-info {
+      flex: 1;
+    }
+    
+    .day-title {
+      font-size: 1.4em;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 5px;
+    }
+    
+    .day-subtitle {
+      color: #718096;
+      font-size: 0.95em;
+    }
+    
+    .toggle-icon {
+      font-size: 1.5em;
+      color: #a0aec0;
+      transition: transform 0.3s ease;
+    }
+    
+    .day-card.collapsed .toggle-icon {
+      transform: rotate(-90deg);
+    }
+    
+    .activities {
+      margin-top: 20px;
+      max-height: 2000px;
+      opacity: 1;
+      transition: all 0.3s ease;
+    }
+    
+    .day-card.collapsed .activities {
+      max-height: 0;
+      opacity: 0;
+      margin-top: 0;
+      overflow: hidden;
+    }
+    
+    .activity {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      background: #f7fafc;
+      transition: all 0.2s ease;
+      align-items: flex-start;
+    }
+    
     .activity:hover {
-      background-color: #e3f2fd;
-      border-radius: 8px;
-      padding-left: 8px;
+      background: #edf2f7;
+      transform: translateX(5px);
     }
-    @media (max-width: 600px) {
-      body { padding: 10px; }
-      .time { display: block; margin-bottom: 4px; }
+    
+    .activity-icon {
+      font-size: 1.5em;
+      flex-shrink: 0;
+      width: 35px;
+      text-align: center;
+    }
+    
+    .activity-content {
+      flex: 1;
+    }
+    
+    .activity-time {
+      font-weight: 600;
+      color: #667eea;
+      font-size: 0.9em;
+      margin-bottom: 5px;
+    }
+    
+    .activity-description {
+      color: #4a5568;
+      line-height: 1.6;
+    }
+    
+    .highlight {
+      color: #667eea;
+      font-weight: 600;
+    }
+    
+    .warning {
+      color: #e53e3e;
+      font-weight: 600;
+    }
+    
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+      margin: 20px 0;
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      
+      .trip-summary {
+        gap: 15px;
+      }
+      
+      .summary-item {
+        padding: 10px 15px;
+        font-size: 0.85em;
+      }
+      
+      .day-card {
+        padding: 20px;
+      }
+      
+      .day-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1em;
+      }
+      
+      .day-title {
+        font-size: 1.1em;
+      }
+      
+      .activity {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .activity-icon {
+        width: auto;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🌏 Singapore • Batam • Yogyakarta Trip</h1>
+  <div class="container">
+    <header>
+      <h1>🌏 Singapore • Batam • Yogyakarta</h1>
+      <div class="trip-summary">
+        <div class="summary-item">📅 <span>7 Days</span></div>
+        <div class="summary-item">🌍 <span>3 Destinations</span></div>
+        <div class="summary-item">✈️ <span>4 Flights</span></div>
+        <div class="summary-item">🗓️ <span>Nov 29 - Dec 5</span></div>
+      </div>
+    </header>
 
-  <!-- Day 1 -->
-  <details open>
-    <summary>🇸🇬 Day 1 • Sat, 29 Nov — Singapore</summary>
-    <div class="activity"><span class="time">12:25</span> ✈️ Arrive at <span style="color:#1E90FF; font-weight:bold;">Singapore Changi Airport</span> - Scoot TR 275</div>
-    <div class="activity"><span class="time">12:30 – 13:00</span> 🛂 Immigration & luggage collection</div>
-    <div class="activity"><span class="time">13:00 – 13:45</span> 🍜 Lunch at <span style="color:#1E90FF; font-weight:bold;">Five Spice Food Court</span> at Jewel Changi Airport B2 level</div>
-    <div class="activity"><span class="time">13:45 – 15:00</span> 🚕 Taxi to <span style="color:#1E90FF; font-weight:bold;">York Hotel, Orchard Road</span> & check-in / freshen up</div>
-    <div class="activity"><span class="time">15:00 – 16:30</span> 🛒 Grab taxi to <span style="color:#1E90FF; font-weight:bold;">Mustafa Centre</span> from hotel</div>
-    <div class="activity"><span class="time">16:30 – 17:00</span> 🚌 Bus (#857) to <span style="color:#1E90FF; font-weight:bold;">Kwan Im Thong Hood Cho Temple</span></div>
-    <div class="activity"><span class="time">17:00 – 18:00</span> 🙏 Pray at temple and explore <span style="color:#1E90FF; font-weight:bold;">Bugis Street</span></div>    
-    <div class="activity"><span class="time">18:00 – 18:30</span> 🚇 MRT to <span style="color:#1E90FF; font-weight:bold;">Promenade (Blue line) Suntec City</span></div>
-    <div class="activity"><span class="time">18:30 – 19:30</span> 🍲 Dinner at <span style="color:#1E90FF; font-weight:bold;">Songfa Bak Kut Teh</span></div>
-    <div class="activity"><span class="time">19:30 – 20:30</span> 🏬 Explore <span style="color:#1E90FF; font-weight:bold;">Suntec City</span></div>
-    <div class="activity"><span class="time">20:30 – 22:00</span> 🌃 Explore Orchard Road and return to hotel / rest</div>
-  </details>
+    <!-- Day 1 -->
+    <div class="day-card">
+      <div class="day-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <div class="day-number">1</div>
+        <div class="day-info">
+          <div class="day-title">🇸🇬 Singapore Arrival</div>
+          <div class="day-subtitle">Saturday, 29 November</div>
+        </div>
+        <div class="toggle-icon">▼</div>
+      </div>
+      <div class="activities">
+        <div class="activity">
+          <div class="activity-icon">✈️</div>
+          <div class="activity-content">
+            <div class="activity-time">12:25</div>
+            <div class="activity-description">Arrive at <span class="highlight">Singapore Changi Airport</span> - Scoot TR 275</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🛂</div>
+          <div class="activity-content">
+            <div class="activity-time">12:30 – 13:00</div>
+            <div class="activity-description">Immigration & luggage collection</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🍜</div>
+          <div class="activity-content">
+            <div class="activity-time">13:00 – 13:45</div>
+            <div class="activity-description">Lunch at <span class="highlight">Five Spice Food Court</span> at Jewel Changi Airport B2 level</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚕</div>
+          <div class="activity-content">
+            <div class="activity-time">13:45 – 15:00</div>
+            <div class="activity-description">Taxi to <span class="highlight">York Hotel, Orchard Road</span> & check-in / freshen up</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🛒</div>
+          <div class="activity-content">
+            <div class="activity-time">15:00 – 16:30</div>
+            <div class="activity-description">Grab taxi to <span class="highlight">Mustafa Centre</span> from hotel</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚌</div>
+          <div class="activity-content">
+            <div class="activity-time">16:30 – 17:00</div>
+            <div class="activity-description">Bus (#857) to <span class="highlight">Kwan Im Thong Hood Cho Temple</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🙏</div>
+          <div class="activity-content">
+            <div class="activity-time">17:00 – 18:00</div>
+            <div class="activity-description">Pray at temple and explore <span class="highlight">Bugis Street</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚇</div>
+          <div class="activity-content">
+            <div class="activity-time">18:00 – 18:30</div>
+            <div class="activity-description">MRT to <span class="highlight">Promenade (Blue line) Suntec City</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🍲</div>
+          <div class="activity-content">
+            <div class="activity-time">18:30 – 19:30</div>
+            <div class="activity-description">Dinner at <span class="highlight">Songfa Bak Kut Teh</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🏬</div>
+          <div class="activity-content">
+            <div class="activity-time">19:30 – 20:30</div>
+            <div class="activity-description">Explore <span class="highlight">Suntec City</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🌃</div>
+          <div class="activity-content">
+            <div class="activity-time">20:30 – 22:00</div>
+            <div class="activity-description">Explore Orchard Road and return to hotel / rest</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- Day 2 -->
-  <details>
-    <summary>⛴️ Day 2 • Sun, 30 Nov — Ferry to Batam</summary>
-    <div class="activity"><span class="time">07:30 – 08:30</span> ☕ Breakfast at <span style="color:#1E90FF; font-weight:bold;">Nanyang Old Coffee</span></div>
-    <div class="activity"><span class="time">08:30 – 09:30</span> 🏮 Explore Chinatown area</div>
-    <div class="activity"><span class="time">09:30 – 10:30</span> 🏨 Go back to hotel + check out + collect luggages</div>
-    <div class="activity"><span class="time">10:30 – 13:00</span> 🚇 MRT to <span style="color:#1E90FF; font-weight:bold;">Punggol 110B</span> and lunch</div>
-    <div class="activity"><span class="time">13:00 – 14:40</span> 🚕 Heading to <span style="color:#1E90FF; font-weight:bold;">HarbourFront Centre</span></div>
-    <div class="activity"><span class="time">14:40 – 14:50</span> 🛳️ Ferry from <span style="color:#1E90FF; font-weight:bold;">HarbourFront Centre</span> → <span style="color:#1E90FF; font-weight:bold;">Batam Centre</span></div>
-    <div class="activity"><span class="time">14:50 – 15:10</span> 🛂 Immigration at <span style="color:#1E90FF; font-weight:bold;">Batam Centre</span></div>
-    <div class="activity"><span class="time">15:10 – 15:40</span> 🚕 Grab to <span style="color:#1E90FF; font-weight:bold;">Jared's house</span></div>
-    <div class="activity"><span class="time">15:40 – 16:00</span> 🏠 Chill, see the house</div>
-    <div class="activity"><span class="time">16:00 – 16:45</span> 💐 Buy Flowers at <span style="color:#1E90FF; font-weight:bold;">Bloomz@tiffany's</span> - Yonas & Jared go to house to put flowers</div>
-    <div class="activity"><span class="time">16:45 – 18:00</span> 🚶 Walk around <span style="color:#1E90FF; font-weight:bold;">Batam Centre / nearby markets</span></div>
-    <div class="activity"><span class="time">18:00 – 19:30</span> 🦞 Dinner at <span style="color:#1E90FF; font-weight:bold;">Love Seafood Batam</span></div>
-    <div class="activity"><span class="time">19:30 – 21:00</span> 🍹 Chill at <span style="color:#1E90FF; font-weight:bold;">Blue Fire Beach Club</span></div>
-    <div class="activity"><span class="time">21:00 – 21:30</span> 🚕 Grab to <span style="color:#1E90FF; font-weight:bold;">Jared's house</span> and rest</div>
-  </details>
+    <!-- Day 2 -->
+    <div class="day-card">
+      <div class="day-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <div class="day-number">2</div>
+        <div class="day-info">
+          <div class="day-title">⛴️ Ferry to Batam</div>
+          <div class="day-subtitle">Sunday, 30 November</div>
+        </div>
+        <div class="toggle-icon">▼</div>
+      </div>
+      <div class="activities">
+        <div class="activity">
+          <div class="activity-icon">☕</div>
+          <div class="activity-content">
+            <div class="activity-time">07:30 – 08:30</div>
+            <div class="activity-description">Breakfast at <span class="highlight">Nanyang Old Coffee</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🏮</div>
+          <div class="activity-content">
+            <div class="activity-time">08:30 – 09:30</div>
+            <div class="activity-description">Explore Chinatown area</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🏨</div>
+          <div class="activity-content">
+            <div class="activity-time">09:30 – 10:30</div>
+            <div class="activity-description">Go back to hotel + check out + collect luggages</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚇</div>
+          <div class="activity-content">
+            <div class="activity-time">10:30 – 13:00</div>
+            <div class="activity-description">MRT to <span class="highlight">Punggol 110B</span> and lunch</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚕</div>
+          <div class="activity-content">
+            <div class="activity-time">13:00 – 14:40</div>
+            <div class="activity-description">Heading to <span class="highlight">HarbourFront Centre</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🛳️</div>
+          <div class="activity-content">
+            <div class="activity-time">14:40 – 14:50</div>
+            <div class="activity-description">Ferry from <span class="highlight">HarbourFront Centre</span> → <span class="highlight">Batam Centre</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🛂</div>
+          <div class="activity-content">
+            <div class="activity-time">14:50 – 15:10</div>
+            <div class="activity-description">Immigration at <span class="highlight">Batam Centre</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚕</div>
+          <div class="activity-content">
+            <div class="activity-time">15:10 – 15:40</div>
+            <div class="activity-description">Grab to <span class="highlight">Jared's house</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🏠</div>
+          <div class="activity-content">
+            <div class="activity-time">15:40 – 16:00</div>
+            <div class="activity-description">Chill, see the house</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">💐</div>
+          <div class="activity-content">
+            <div class="activity-time">16:00 – 16:45</div>
+            <div class="activity-description">Buy Flowers at <span class="highlight">Bloomz@tiffany's</span> (Jl. Mitra Raya 2 No.3A Blok C) - Yonas & Jared go to house to put flowers</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚶</div>
+          <div class="activity-content">
+            <div class="activity-time">16:45 – 18:00</div>
+            <div class="activity-description">Walk around <span class="highlight">Batam Centre / nearby markets</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🦞</div>
+          <div class="activity-content">
+            <div class="activity-time">18:00 – 19:30</div>
+            <div class="activity-description">Dinner at <span class="highlight">Love Seafood Batam</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🍹</div>
+          <div class="activity-content">
+            <div class="activity-time">19:30 – 21:00</div>
+            <div class="activity-description">Chill at <span class="highlight">Blue Fire Beach Club</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚕</div>
+          <div class="activity-content">
+            <div class="activity-time">21:00 – 21:30</div>
+            <div class="activity-description">Grab to <span class="highlight">Jared's house</span> and rest</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- Day 3 -->
-  <details>
-    <summary>🇮🇩 Day 3 • Mon, 1 Dec — Batam</summary>
-    <div class="activity"><span class="time">07:00 – 08:00</span> 🍳 Breakfast at <span style="color:#1E90FF; font-weight:bold;">Pasar Putih</span></div>
-    <div class="activity"><span class="time">08:00 – 08:30</span> 🥘 Buy foods for monks</div>
-    <div class="activity"><span class="time">08:30 – 09:00</span> 🏠 Go back to Jared's house + collect Nasi Tumpeng at 9 am</div>
-    <div class="activity"><span class="time">09:30 – 10:30</span> 🚗 Fetch monks at <span style="color:#1E90FF; font-weight:bold;">Vihara Grha Buddha Manggala</span></div>
-    <div class="activity"><span class="time">10:30 – 13:00</span> 🙏 House blessing ceremony with monks + lunch</div>
-    <div class="activity"><span class="time">13:00 – 14:00</span> 🚗 Send monks back to temple</div>
-    <div class="activity"><span class="time">14:00 – 18:00</span> 🛍️ Visit <span style="color:#1E90FF; font-weight:bold;">BCS / Grand Batam Mall</span> + café chill at <span style="color:#1E90FF; font-weight:bold;">Mula pattiserie</span></div>
-    <div class="activity"><span class="time">18:00 – 19:30</span> 🍛 Dinner Thai/Korean at <span style="color:#1E90FF; font-weight:bold;">Harbourbay</span></div>
-    <div class="activity"><span class="time">19:30 – 21:00</span> 🎵 Chill at <span style="color:#1E90FF; font-weight:bold;">HW Live Bar Harbourbay</span></div>
-    <div class="activity"><span class="time">21:00 – 21:30</span> 🚕 Grab to <span style="color:#1E90FF; font-weight:bold;">Jared's house</span> and rest</div>
-  </details>
+    <!-- Day 3 -->
+    <div class="day-card">
+      <div class="day-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <div class="day-number">3</div>
+        <div class="day-info">
+          <div class="day-title">🇮🇩 Batam - House Blessing</div>
+          <div class="day-subtitle">Monday, 1 December</div>
+        </div>
+        <div class="toggle-icon">▼</div>
+      </div>
+      <div class="activities">
+        <div class="activity">
+          <div class="activity-icon">🍳</div>
+          <div class="activity-content">
+            <div class="activity-time">07:00 – 08:00</div>
+            <div class="activity-description">Breakfast at <span class="highlight">Pasar Putih</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🥘</div>
+          <div class="activity-content">
+            <div class="activity-time">08:00 – 08:30</div>
+            <div class="activity-description">Buy foods for monks</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🏠</div>
+          <div class="activity-content">
+            <div class="activity-time">08:30 – 09:00</div>
+            <div class="activity-description">Go back to Jared's house + collect Nasi Tumpeng at 9 am</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚗</div>
+          <div class="activity-content">
+            <div class="activity-time">09:30 – 10:30</div>
+            <div class="activity-description">Fetch monks at <span class="highlight">Vihara Grha Buddha Manggala</span> (Perum. Baloi Mas Permai, Blk. B Jl. Anggrek Permai No.21)</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🙏</div>
+          <div class="activity-content">
+            <div class="activity-time">10:30 – 13:00</div>
+            <div class="activity-description">House blessing ceremony with monks + lunch</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚗</div>
+          <div class="activity-content">
+            <div class="activity-time">13:00 – 14:00</div>
+            <div class="activity-description">Send monks back to temple</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🛍️</div>
+          <div class="activity-content">
+            <div class="activity-time">14:00 – 18:00</div>
+            <div class="activity-description">Visit <span class="highlight">BCS / Grand Batam Mall</span> + café chill at <span class="highlight">Mula pattiserie</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🍛</div>
+          <div class="activity-content">
+            <div class="activity-time">18:00 – 19:30</div>
+            <div class="activity-description">Dinner Thai/Korean at <span class="highlight">Harbourbay</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🎵</div>
+          <div class="activity-content">
+            <div class="activity-time">19:30 – 21:00</div>
+            <div class="activity-description">Chill at <span class="highlight">HW Live Bar Harbourbay</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚕</div>
+          <div class="activity-content">
+            <div class="activity-time">21:00 – 21:30</div>
+            <div class="activity-description">Grab to <span class="highlight">Jared's house</span> and rest</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- Day 4 -->
-  <details>
-    <summary>✈️ Day 4 • Tue, 2 Dec — Yogyakarta</summary>
-    <div class="activity"><span class="time">06:00 – 06:30</span> 🚕 Leave house and Grab to <span style="color:#1E90FF; font-weight:bold;">BTH Airport</span></div>
-    <div class="activity"><span class="time">06:30 – 07:30</span> ✅ Check-in + light breakfast at airport</div>
-    <div class="activity"><span class="time">08:05 – 09:45</span> ✈️ Flight to <span style="color:#1E90FF; font-weight:bold;">Jakarta CGK</span> - Citilink QG 941 (T1)</div>
-    <div class="activity"><span class="time">09:45 – 11:30</span> 🔄 Transfer & immigration</div>
-    <div class="activity"><span class="time">11:30 – 12:50</span> ✈️ Flight to <span style="color:#1E90FF; font-weight:bold;">Yogyakarta YIA</span> - Garuda Indonesia GA0208</div>
-    <div class="activity"><span class="time">12:50 – 14:00</span> 🍜 Arrival and lunch at <span style="color:#1E90FF; font-weight:bold;">Airport area</span></div>
-    <div class="activity"><span class="time">14:00 – 15:00</span> 🚗 Arrival & meet driver <span style = "color: #FF0000; font-weight:bold;">(Need to find and book)</span></div>
-    <div class="activity"><span class="time">15:00 – 15:45</span> 🏠 Check-in AirBnb (Jalan Mangkuyudan No.29)</div>
-    <div class="activity"><span class="time">15:45 – 18:30</span> 🎨 Explore <span style="color:#1E90FF; font-weight:bold;">Beringharjo Market - Hamzah Batik</span> 
-      and walking around <span style="color:#1E90FF; font-weight:bold;">Malioboro</span>
-      can try <span style="color:#1E90FF; font-weight:bold;">Lumpia Samijaya</span></div>
-    <div class="activity"><span class="time">18:30 – 20:00</span> 🥘 Dinner at <span style="color:#1E90FF; font-weight:bold;">Gudeg Yu Djum</span></div>
-    <div class="activity"><span class="time">20:00 – .....</span> 🌙 Explore <span style="color:#1E90FF; font-weight:bold;">Plaza Malioboro / Teras Malioboro night market / Titik Nol KM</span></div>
-  </details>
+    <!-- Day 4 -->
+    <div class="day-card">
+      <div class="day-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <div class="day-number">4</div>
+        <div class="day-info">
+          <div class="day-title">✈️ Yogyakarta Arrival</div>
+          <div class="day-subtitle">Tuesday, 2 December</div>
+        </div>
+        <div class="toggle-icon">▼</div>
+      </div>
+      <div class="activities">
+        <div class="activity">
+          <div class="activity-icon">🚕</div>
+          <div class="activity-content">
+            <div class="activity-time">06:00 – 06:30</div>
+            <div class="activity-description">Leave house and Grab to <span class="highlight">BTH Airport</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">✅</div>
+          <div class="activity-content">
+            <div class="activity-time">06:30 – 07:30</div>
+            <div class="activity-description">Check-in + light breakfast at airport</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">✈️</div>
+          <div class="activity-content">
+            <div class="activity-time">08:05 – 09:45</div>
+            <div class="activity-description">Flight to <span class="highlight">Jakarta CGK</span> - Citilink QG 941 (T1)</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🔄</div>
+          <div class="activity-content">
+            <div class="activity-time">09:45 – 11:30</div>
+            <div class="activity-description">Transfer & immigration</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">✈️</div>
+          <div class="activity-content">
+            <div class="activity-time">11:30 – 12:50</div>
+            <div class="activity-description">Flight to <span class="highlight">Yogyakarta YIA</span> - Garuda Indonesia GA0208</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🍜</div>
+          <div class="activity-content">
+            <div class="activity-time">12:50 – 14:00</div>
+            <div class="activity-description">Arrival and lunch at <span class="highlight">Airport area</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚗</div>
+          <div class="activity-content">
+            <div class="activity-time">14:00 – 15:00</div>
+            <div class="activity-description">Arrival & meet driver <span class="warning">(Need to find and book)</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🏠</div>
+          <div class="activity-content">
+            <div class="activity-time">15:00 – 15:45</div>
+            <div class="activity-description">Check-in AirBnb (Jalan Mangkuyudan No.29)</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🎨</div>
+          <div class="activity-content">
+            <div class="activity-time">15:45 – 18:30</div>
+            <div class="activity-description">Explore <span class="highlight">Beringharjo Market - Hamzah Batik</span> and walking around <span class="highlight">Malioboro</span> - can try <span class="highlight">Lumpia Samijaya</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🥘</div>
+          <div class="activity-content">
+            <div class="activity-time">18:30 – 20:00</div>
+            <div class="activity-description">Dinner at <span class="highlight">Gudeg Yu Djum</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🌙</div>
+          <div class="activity-content">
+            <div class="activity-time">20:00 – .....</div>
+            <div class="activity-description">Explore <span class="highlight">Plaza Malioboro / Teras Malioboro night market / Titik Nol KM</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- Day 5 -->
-  <details>
-    <summary>🕌 Day 5 • Wed, 3 Dec — Borobudur & Manoreh Area</summary>
-    <div class="activity"><span class="time">06:00 – 08:00</span> 🍳 Breakfast at AirBnb</div>
-    <div class="activity"><span class="time">08:00 – 09:00</span> 🚗 Depart to <span style="color:#1E90FF; font-weight:bold;">Borobudur Temple</span></div>
-    <div class="activity"><span class="time">09:00 – 11:00</span> 🛕 Explore <span style="color:#1E90FF; font-weight:bold;">Borobudur Temple</span></div>
-    <div class="activity"><span class="time">11:00 – 13:00</span> 🍛 Lunch at <span style="color:#1E90FF; font-weight:bold;">Trumtum Gasblock Borobudur</span></div>
-    <div class="activity"><span class="time">13:00 – 15:00</span> ⛰️ Visit <span style="color:#1E90FF; font-weight:bold;">Candirejo Village tour + Tumpeng Menoreh viewpoint</span> (in Manoreh Hill area)</div>
-    <div class="activity"><span class="time">15:00 – 15:45</span> ☕ Coffee/tea break at <span style="color:#1E90FF; font-weight:bold;">SUROLOYO COFFEE & RESTO</span></div>
-    <div class="activity"><span class="time">15:45 – 17:15</span> 🚗 Return to <span style="color:#1E90FF; font-weight:bold;">Yogyakarta city</span> & rest</div>
-    <div class="activity"><span class="time">17:15 – 19:30</span> 🍜 Dinner at <span style="color:#1E90FF; font-weight:bold;">Warung Bu Ageng</span></div>
-    <div class="activity"><span class="time">19:30 – 21:00</span> 🏬 Walk at <span style="color:#1E90FF; font-weight:bold;">Galeria Mall Yogyakarta / Gardena Department Store & Supermarket</span></div>
-  </details>
-  
-  <!-- Day 6 -->
-  <details>
-    <summary>🏰 Day 6 • Thu, 4 Dec — Yogyakarta Cultural Day</summary>
-    <div class="activity"><span class="time">07:00 – 08:00</span> 🍳 Breakfast at AirBnb</div>
-    <div class="activity"><span class="time">08:00 – 08:20</span> ☕ Quick coffee stop at <span style="color:#1E90FF; font-weight:bold;">Nuju Coffee</span> (grab to-go)</div>
-    <div class="activity"><span class="time">08:30 – 10:30</span> 🕌 Drive and explore <span style="color:#1E90FF; font-weight:bold;">Prambanan Temple</span></div>
-    <div class="activity"><span class="time">10:30 – 12:00</span> 👑 Visit <span style="color:#1E90FF; font-weight:bold;">Kraton Jogja (Yogyakarta Palace)</span></div>
-    <div class="activity"><span class="time">12:00 – 12:45</span> 🦜 Explore <span style="color:#1E90FF; font-weight:bold;">Pasar Ngasem Bird Market</span> (next to Kraton)</div>
-    <div class="activity"><span class="time">12:45 – 14:15</span> 🍽️ Lunch at <span style="color:#1E90FF; font-weight:bold;">Bale Raos (Royal Cuisine)</span></div>
-    <div class="activity"><span class="time">14:15 – 15:15</span> 💧 Quick visit <span style="color:#1E90FF; font-weight:bold;">Taman Sari Water Castle</span> (if time permits)</div>
-    <div class="activity"><span class="time">15:15 – 18:00</span> 🛍️ Shopping at <span style="color:#1E90FF; font-weight:bold;">Ambarrukmo Plaza</span></div>
-    <div class="activity"><span class="time">18:00 – 19:30</span> 🥩 Dinner at <span style="color:#1E90FF; font-weight:bold;">Kalluna Steak & Indonesian Food</span></div>
-    <div class="activity"><span class="time">19:30 – 21:00</span> 🏬 Explore <span style="color:#1E90FF; font-weight:bold;">Lippo Plaza Jogja</span></div>
-  </details>
-
-  <!-- Day 7 -->
-  <details>
-    <summary>🛫 Day 7 • Fri, 5 Dec — Departure</summary>
-    <div class="activity"><span class="time">07:00 – 09:00</span> 🍳 Breakfast at AirBnb and grab coffee at <span style="color:#1E90FF; font-weight:bold;">KITA by inessy</span></div>
-    <div class="activity"><span class="time">09:00 – 10:00</span> 🎁 Souvenir shopping at <span style="color:#1E90FF; font-weight:bold;">Bakpia Kurnia</span></div>
-    <div class="activity"><span class="time">10:00 – 11:30</span> 🏨 Hotel checkout & transfer to <span style="color:#1E90FF; font-weight:bold;">Yogyakarta Airport</span></div>
-    <div class="activity"><span class="time">11:30 – 12:30</span> 🍜 Lunch near airport at <span style="color:#1E90FF; font-weight:bold;">Joglo Saerah Resto & Cafe</span></div>
-    <div class="activity"><span class="time">13:40 – 15:00</span> ✈️ Flight <span style="color:#1E90FF; font-weight:bold;">Yogyakarta → Jakarta (CGK)</span></div>
-  </details>
-
-</body>
-</html>
+    <!-- Day 5 -->
+    <div class="day-card">
+      <div class="day-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <div class="day-number">5</div>
+        <div class="day-info">
+          <div class="day-title">🕌 Borobudur & Manoreh</div>
+          <div class="day-subtitle">Wednesday, 3 December</div>
+        </div>
+        <div class="toggle-icon">▼</div>
+      </div>
+      <div class="activities">
+        <div class="activity">
+          <div class="activity-icon">🍳</div>
+          <div class="activity-content">
+            <div class="activity-time">06:00 – 08:00</div>
+            <div class="activity-description">Breakfast at AirBnb</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚗</div>
+          <div class="activity-content">
+            <div class="activity-time">08:00 – 09:00</div>
+            <div class="activity-description">Depart to <span class="highlight">Borobudur Temple</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🛕</div>
+          <div class="activity-content">
+            <div class="activity-time">09:00 – 11:00</div>
+            <div class="activity-description">Explore <span class="highlight">Borobudur Temple</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🍛</div>
+          <div class="activity-content">
+            <div class="activity-time">11:00 – 13:00</div>
+            <div class="activity-description">Lunch at <span class="highlight">Trumtum Gasblock Borobudur</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">⛰️</div>
+          <div class="activity-content">
+            <div class="activity-time">13:00 – 15:00</div>
+            <div class="activity-description">Visit <span class="highlight">Candirejo Village tour + Tumpeng Menoreh viewpoint</span> (in Manoreh Hill area)</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">☕</div>
+          <div class="activity-content">
+            <div class="activity-time">15:00 – 15:45</div>
+            <div class="activity-description">Coffee/tea break at <span class="highlight">SUROLOYO COFFEE & RESTO</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🚗</div>
+          <div class="activity-content">
+            <div class="activity-time">15:45 – 17:15</div>
+            <div class="activity-description">Return to <span class="highlight">Yogyakarta city</span> & rest</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🍜</div>
+          <div class="activity-content">
+            <div class="activity-time">17:15 – 19:30</div>
+            <div class="activity-description">Dinner at <span class="highlight">House of Raminten</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">🏬</div>
+          <div class="activity-content">
+            <div class="activity-time">19:30 – 21:00</div>
