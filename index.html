@@ -75,6 +75,10 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     }
     
+    .preparation-card {
+      border-left: 4px solid #f6ad55;
+    }
+    
     .day-header {
       display: flex;
       align-items: center;
@@ -447,6 +451,56 @@
       </div>
     </div>
 
+    <!-- Preparation Card -->
+    <div class="day-card preparation-card">
+      <div class="day-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <div class="day-number">📋</div>
+        <div class="day-info">
+          <div class="day-title">📝 House Blessing Preparation</div>
+          <div class="day-subtitle">Items needed for Monday ceremony</div>
+        </div>
+        <div class="toggle-icon">▼</div>
+      </div>
+      <div class="activities">
+        <div class="activity">
+          <div class="activity-icon">1</div>
+          <div class="activity-content">
+            <div class="activity-description">Bunga melati untuk pemercikan air <span class="highlight">(Jasmine flowers for water sprinkling)</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">2</div>
+          <div class="activity-content">
+            <div class="activity-description">Baskom untuk pemercikan air <span class="highlight">(Basin for water sprinkling)</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">3</div>
+          <div class="activity-content">
+            <div class="activity-description">Buku Paritta?</div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">4</div>
+          <div class="activity-content">
+            <div class="activity-description">Lilin, Hio, Buddha Rupang, tempat taro hio n lilin <span class="highlight">(Candles, Incense, Buddha statue, incense holder)</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">5</div>
+          <div class="activity-content">
+            <div class="activity-description">Jubah untuk dana <span class="highlight">(Robes for donation)</span></div>
+          </div>
+        </div>
+        <div class="activity">
+          <div class="activity-icon">6</div>
+          <div class="activity-content">
+            <div class="activity-description">Dana makan <span class="highlight">(Food offering)</span> — Resto open: 7 AM - <span class="highlight">Empat Rasa</span>; tempat makan kopitiam</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Day 3 -->
     <div class="day-card">
       <div class="day-header" onclick="this.parentElement.classList.toggle('collapsed')">
@@ -643,203 +697,4 @@
         <div class="activity">
           <div class="activity-icon">🚗</div>
           <div class="activity-content">
-            <div class="activity-time">07:30 – 08:40</div>
-            <div class="activity-description">Drive to <span class="highlight">Borobudur Temple</span> (40km, about 1 hour)</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🛕</div>
-          <div class="activity-content">
-            <div class="activity-time">08:40 – 10:00</div>
-            <div class="activity-description">Explore <span class="highlight">Borobudur Temple</span> - UNESCO World Heritage site, arrive early to beat crowds, take time for photos and rest breaks</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🙏</div>
-          <div class="activity-content">
-            <div class="activity-time">10:00 – 11:30</div>
-            <div class="activity-description">Quick visit to <span class="highlight">Mendut Temple</span> - can donate food to monks if have (optional)</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🍽️</div>
-          <div class="activity-content">
-            <div class="activity-time">11:30 – 13:00</div>
-            <div class="activity-description">Lunch at <span class="highlight">Truntum Gasblock Borobudur</span></div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">📸</div>
-          <div class="activity-content">
-            <div class="activity-time">13:00 – 14:00</div>
-            <div class="activity-description">Visit <span class="highlight">Svargabumi</span> - beautiful Borobudur views from different angle, easy flat walking, great photos</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🚗</div>
-          <div class="activity-content">
-            <div class="activity-time">14:00 – 15:30</div>
-            <div class="activity-description">Otw to <span class="highlight">Tempo Gelato Prawirotaman</span></div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🍦</div>
-          <div class="activity-content">
-            <div class="activity-time">15:30 – 16:30</div>
-            <div class="activity-description">Eat ice cream and chill there a while</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🛍️</div>
-          <div class="activity-content">
-            <div class="activity-time">16:30 – 18:00</div>
-            <div class="activity-description">Explore <span class="highlight">Prawirotaman (Via Via coffee, Oasis Group)</span></div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🍜</div>
-          <div class="activity-content">
-            <div class="activity-time">18:00 – 19:30</div>
-            <div class="activity-description">Dinner at <span class="highlight">House of Raminten</span> - quirky traditional Javanese restaurant</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🏬</div>
-          <div class="activity-content">
-            <div class="activity-time">19:30 – 21:00</div>
-            <div class="activity-description">Optional: <span class="highlight">Galeria Mall Yogyakarta / Gardena Supermarket / Kebon Ndalem Coffee & Eatery</span> (or return to AirBnb if tired)</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Day 6 -->
-    <div class="day-card">
-      <div class="day-header" onclick="this.parentElement.classList.toggle('collapsed')">
-        <div class="day-number">6</div>
-        <div class="day-info">
-          <div class="day-title">🏰 Yogyakarta Cultural Day</div>
-          <div class="day-subtitle">Thursday, 4 December</div>
-        </div>
-        <div class="toggle-icon">▼</div>
-      </div>
-      <div class="activities">
-        <div class="activity">
-          <div class="activity-icon">🍳</div>
-          <div class="activity-content">
-            <div class="activity-time">06:30 – 07:45</div>
-            <div class="activity-description">Get ready & Breakfast at AirBnb</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">☕</div>
-          <div class="activity-content">
-            <div class="activity-time">07:45 – 08:15</div>
-            <div class="activity-description">Quick coffee stop at <span class="highlight">Nuju Coffee</span> (grab to-go)</div>
-          </div>
-        </div>
-         <div class="activity">
-          <div class="activity-icon">👑</div>
-          <div class="activity-content">
-            <div class="activity-time">08:15 – 09:15</div>
-            <div class="activity-description">Visit <span class="highlight">Kraton Jogja (Yogyakarta Palace)</span> - open at 8 AM</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🏕️</div>
-          <div class="activity-content">
-            <div class="activity-time">09:15 – 11:00</div>
-            <div class="activity-description">Drive and explore <span class="highlight">Glampong Studio Alam</span></div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🍽️</div>
-          <div class="activity-content">
-            <div class="activity-time">11:00 – 13:00</div>
-            <div class="activity-description">Lunch at <span class="highlight">Ayom Jogja</span></div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🕌</div>
-          <div class="activity-content">
-            <div class="activity-time">13:00 – 15:30</div>
-            <div class="activity-description">Drive and explore <span class="highlight">Prambanan Temple</span> - around 45mins - 1hour drive</div>
-          </div>
-        </div>
-       
-        <div class="activity">
-          <div class="activity-icon">☕</div>
-          <div class="activity-content">
-            <div class="activity-time">15:30 – 17:00</div>
-            <div class="activity-description">Chill at <span class="highlight">Wanawatu Cafe</span> - min spend. 100K/person <span class="warning">better book!</span></div>
-          </div>
-        </div>
-         <div class="activity">
-          <div class="activity-icon">🍽️</div>
-          <div class="activity-content">
-            <div class="activity-time">17:00 – 19:30</div>
-            <div class="activity-description">Dinner at <span class="highlight">Bale Raos</span> - drive around 1 hr</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🛍️</div>
-          <div class="activity-content">
-            <div class="activity-time">19:30 – 21:00</div>
-            <div class="activity-description">Shopping at <span class="highlight">Ambarrukmo Plaza / Malioboro to Punokawan / Bakpia Kurnia</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Day 7 -->
-    <div class="day-card">
-      <div class="day-header" onclick="this.parentElement.classList.toggle('collapsed')">
-        <div class="day-number">7</div>
-        <div class="day-info">
-          <div class="day-title">🛫 Departure Day</div>
-          <div class="day-subtitle">Friday, 5 December</div>
-        </div>
-        <div class="toggle-icon">▼</div>
-      </div>
-      <div class="activities">
-        <div class="activity">
-          <div class="activity-icon">🍳</div>
-          <div class="activity-content">
-            <div class="activity-time">06:30 – 08:00</div>
-            <div class="activity-description">Breakfast at AirBnb and grab coffee at <span class="highlight">KITA by inessy</span> - if wanna grab coffee</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🍜</div>
-          <div class="activity-content">
-            <div class="activity-time">08:00 – 09:30</div>
-            <div class="activity-description">Go to <span class="highlight">Pasar Ngasem</span> (take grab car)</div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🏨</div>
-          <div class="activity-content">
-            <div class="activity-time">09:30 – 11:30</div>
-            <div class="activity-description">Hotel checkout & transfer to <span class="highlight">Yogyakarta Airport</span></div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">🍜</div>
-          <div class="activity-content">
-            <div class="activity-time">11:30 – 12:30</div>
-            <div class="activity-description">Lunch near airport at <span class="highlight">Joglo Saerah Resto & Cafe</span></div>
-          </div>
-        </div>
-        <div class="activity">
-          <div class="activity-icon">✈️</div>
-          <div class="activity-content">
-            <div class="activity-time">13:40 – 15:00</div>
-            <div class="activity-description">Flight <span class="highlight">Yogyakarta → Jakarta (CGK)</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</body>
-</html>
+            <div class="activity-time">07:30 – 08:
