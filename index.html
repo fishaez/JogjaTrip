@@ -233,6 +233,19 @@
       .activity-icon {
         width: auto;
       }
+      .check-item {
+      width: 18px;
+      height: 18px;
+      accent-color: #667eea;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .activity label {
+      cursor: pointer;
+      line-height: 1.6;
+      color: #4a5568;
+    }
     }
   </style>
 </head>
@@ -462,44 +475,56 @@
         <div class="toggle-icon">▼</div>
       </div>
       <div class="activities">
+    
         <div class="activity">
-          <div class="activity-icon">1</div>
-          <div class="activity-content">
-            <div class="activity-description">Jasmine flowers for blessing</div>
-          </div>
+          <input type="checkbox" id="item1" class="check-item">
+          <label for="item1">Bunga melati untuk pemercikan air <span class="highlight">(Jasmine flowers for water sprinkling)</span></label>
         </div>
+    
         <div class="activity">
-          <div class="activity-icon">2</div>
-          <div class="activity-content">
-            <div class="activity-description">Bucket for blessing</div>
-          </div>
+          <input type="checkbox" id="item2" class="check-item">
+          <label for="item2">Baskom untuk pemercikan air <span class="highlight">(Basin for water sprinkling)</span></label>
         </div>
+    
         <div class="activity">
-          <div class="activity-icon">3</div>
-          <div class="activity-content">
-            <div class="activity-description">Paritta book ?</div>
-          </div>
+          <input type="checkbox" id="item3" class="check-item">
+          <label for="item3">Buku Paritta?</label>
         </div>
+    
         <div class="activity">
-          <div class="activity-icon">4</div>
-          <div class="activity-content">
-            <div class="activity-description">Candles + holders, Incenses + holders, Buddha Statue</div>
-          </div>
+          <input type="checkbox" id="item4" class="check-item">
+          <label for="item4">Lilin, Hio, Buddha Rupang, tempat taro hio n lilin <span class="highlight">(Candles, Incense, Buddha statue, incense holder)</span></label>
         </div>
+    
         <div class="activity">
-          <div class="activity-icon">5</div>
-          <div class="activity-content">
-            <div class="activity-description">Robes for donation</div>
-          </div>
+          <input type="checkbox" id="item5" class="check-item">
+          <label for="item5">Jubah untuk dana <span class="highlight">(Robes for donation)</span></label>
         </div>
+    
         <div class="activity">
-          <div class="activity-icon">6</div>
-          <div class="activity-content">
-            <div class="activity-description">Food offering — Restaurant open at 7 AM - <span class="highlight">Empat Rasa / tempat makan kopitiam </span></div>
-          </div>
+          <input type="checkbox" id="item6" class="check-item">
+          <label for="item6">Dana makan <span class="highlight">(Food offering)</span> — Resto open: 7 AM - <span class="highlight">Empat Rasa</span>; tempat makan kopitiam</label>
         </div>
+    
       </div>
     </div>
+    
+    <script>
+      // --- Persist checkbox state ---
+      const checkboxes = document.querySelectorAll('.check-item');
+    
+      checkboxes.forEach(cb => {
+        // Load saved state
+        const saved = localStorage.getItem(cb.id);
+        if (saved === 'true') cb.checked = true;
+    
+        // Save on change
+        cb.addEventListener('change', () => {
+          localStorage.setItem(cb.id, cb.checked);
+        });
+      });
+    </script>
+
 
     <!-- Day 3 -->
     <div class="day-card">
